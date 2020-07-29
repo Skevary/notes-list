@@ -1,0 +1,45 @@
+// markup - *mu*
+
+html {
+  /* Fonts */
+
+  --ff-default: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", sans-serif;
+
+  --ff-mu-header: "PT Serif","Noto Sans Armenian","Noto Sans Bengali","Noto Sans Cherokee","Noto Sans Devanagari","Noto Sans Ethiopic","Noto Sans Georgian","Noto Sans Hebrew","Noto Sans Kannada","Noto Sans Khmer","Noto Sans Lao","Noto Sans Osmanya","Noto Sans Tamil","Noto Sans Telugu","Noto Sans Thai",serif;
+
+
+  /* Edges */
+
+  --mu-md-space: .75em;
+  --mu-lw-space: .5em;
+
+
+  /* App var */
+  --main-radius: 4px;
+  --ellipsis-radius: 12px;
+  --top-height: 2.5rem;
+  --sidebar-width: 10rem;
+
+  --border-edge: .5rem;
+
+  --low-spacing: .25em;
+  --md-spacing: .35em;
+  --h-spacing: .5em;
+
+
+  /* Color var */
+  --box-foreground: #fafbfc;
+  --box-border: #e7e8ec;
+  --background: #edeef0;
+  --action: rgb(80 72 72 / 84%);
+  --selected: rgb(0 0 0 / 90%);
+  --border: rgba(65, 131, 196, .3);
+  --hover-bg: rgba(166, 166, 166, 0.15);
+  --box-container: #fff;
+
+  --box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+  --header-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+
+  --main-color: #1E88E5;
+  --active-color: #2196f3;
+}
