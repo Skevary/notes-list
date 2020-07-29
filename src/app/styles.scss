@@ -1,5 +1,3 @@
-/** App Root **/
-
 #root {
   position: absolute;
   z-index: 1;
@@ -14,5 +12,16 @@
   right: 0;
 
   background-color: #d9d9d9;
-  font-size: 20px
+}
+
+#controls {
+  margin: .5em 0;
+
+  button {
+    margin-right: .15em;
+  }
+}
+
+.add-item {
+  white-space: nowrap;
 }

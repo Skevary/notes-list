@@ -1,63 +1,60 @@
 import React, {FC} from "react";
-import {ListItem} from "../shared";
+import {ActiveItem, List} from "../shared/models";
 
 
 type Props = {
-    items: ListItem[];
-    selectedItemId: string | null;
+    lists: List[];
+    activeItem: ActiveItem;
 
-    moveToUp: (index: number) => any;
-    moveToDown: (index: number) => any;
-    addSublist: (index: number) => any;
-    removeSublist: (index: number) => any;
-    remove: (index: number) => any;
+    moveToUp: (item: ActiveItem) => any;
+    moveToDown: (item: ActiveItem) => any;
+    addSublist: (item: ActiveItem) => any;
+    removeSublist: (item: ActiveItem) => any;
+    remove: (item: ActiveItem) => any;
 }
 
-const Controls: FC<Props> = props => {
-    const idx = props.items.findIndex(v => v.id === props.selectedItemId);
+const Controls: FC<Props> =  ({
+         lists, activeItem,
+         moveToUp, moveToDown, addSublist, removeSublist, remove
+    }) => {
+
+    const listIndex = !!activeItem.itemId ? lists.findIndex(v => v.id === activeItem.listId) : -1;
+    const itemIndex = !!activeItem.itemId ? lists[listIndex].items.findIndex(v => v.id === activeItem.itemId) : -1;
+    const hasSelectedItem = () => !!(activeItem.itemId && listIndex !== -1);
+
 
     return (
         <div id='controls'>
 
             <button
-                disabled={!props.selectedItemId || idx <= 0}
+                disabled={!hasSelectedItem() || itemIndex <= 0}
                 title='Move to Up'
-                onClick={() => props.moveToUp(idx)}
-            >
-                ˄
-            </button>
+                onClick={() => moveToUp(activeItem)}
+            >˄</button>
 
             <button
-                disabled={!props.selectedItemId || idx >= props.items.length - 1}
+                disabled={!hasSelectedItem() || itemIndex >= lists[listIndex].items.length - 1}
                 title='Move to Down'
-                onClick={() => props.moveToDown(idx)}
-            >
-                ˅
-            </button>
+                onClick={() => moveToDown(activeItem)}
+            >˅</button>
 
             <button
-                disabled={!props.selectedItemId || !!props.items[idx]?.children.length}
+                disabled={!hasSelectedItem() || !!lists[listIndex].items[itemIndex].sublistId}
                 title='Add sublist'
-                onClick={() => props.addSublist(idx)}
-            >
-                + list
-            </button>
+                onClick={() => addSublist(activeItem)}
+            >+ list</button>
 
             <button
-                disabled={!props.selectedItemId || !props.items[idx]?.children.length}
+                disabled={!hasSelectedItem() || !lists[listIndex].items[itemIndex].sublistId}
                 title='Remove sublist'
-                onClick={() => props.removeSublist(idx)}
-            >
-                x list
-            </button>
+                onClick={() => removeSublist(activeItem)}
+            >x list</button>
 
             <button
-                disabled={!props.selectedItemId}
+                disabled={!hasSelectedItem()}
                 title='Remove item'
-                onClick={() => props.remove(idx)}
-            >
-                x
-            </button>
+                onClick={() => remove(activeItem)}
+            >x</button>
         </div>
     )
 };

@@ -1,47 +1,57 @@
 import React, {FC, MouseEvent} from "react";
-import {ListItem, uuid} from "../shared";
+import {ActiveItem, List} from "../shared/models";
 import AddItem from "./add-item";
 
 type Props = {
-    items: ListItem[];
-    selectedItemId: string | null;
-    addItem: (val: string) => any;
-    changeSelectedItem: (id: string) => any;
+    list: List;
+    lists: List[];
+    activeItem: ActiveItem;
+
+    addItem: (listId: string, value: string) => any;
+    selectActiveItem: (item: ActiveItem) => any;
 };
 
-const List: FC<Props> = props => {
+const EnumeratedList: FC<Props> = ({
+       list, lists, activeItem, addItem, selectActiveItem
+    }) => {
 
-    const handleChangeSelectedItem = (e: MouseEvent, id: string) => {
-        props.changeSelectedItem(id);
+    const newListItemHandler = (value: string) => {
+        addItem(list.id, value);
+    };
+
+    const selectActiveItemHandler = (e: MouseEvent, itemId: string) => {
+        selectActiveItem({listId: list.id, itemId});
         e.stopPropagation();
     };
 
-    const handleAddNewItem = (value: string) => {
-        props.items.push({
-            id: uuid(), value, children: []
-        });
+    const getSublist = (listId: string) => {
+        return lists.find(v => v.id === listId);
     };
 
+
     return (
-        <ul>
-            {props.items.map(item =>
+        <ul onClick={e => e.stopPropagation()}>
+            {list.items.map(item =>
                 <li
-                    key={item.id} id={item.id}
-                    data-checked={item.id === props.selectedItemId}
-                    onClick={e => handleChangeSelectedItem(e, item.id)}>
+                    key={item.id}
+                    data-checked={item.id === activeItem.itemId}
+                    onClick={e => selectActiveItemHandler(e, item.id)}>
+
                     <span>{item.value}</span>
-                    {!!item.children.length && <List
-                        items={item.children}
-                        selectedItemId={props.selectedItemId}
-                        addItem={props.addItem}
-                        changeSelectedItem={props.changeSelectedItem}
+
+                    {!!item.sublistId && <EnumeratedList
+                        list={getSublist(item.sublistId) as List}
+                        lists={lists}
+                        activeItem={activeItem}
+                        addItem={addItem}
+                        selectActiveItem={selectActiveItem}
                     />}
                 </li>
             )}
 
-            <AddItem addItem={handleAddNewItem}/>
+            <AddItem addItem={newListItemHandler}/>
         </ul>
     )
 };
 
-export default List;
+export default EnumeratedList;

@@ -1,41 +1,44 @@
-import React, {FC, useEffect, useState, KeyboardEvent} from "react";
+import React, {FC, KeyboardEvent, useState} from "react";
 
 
 type Props = {
     addItem: (val: string) => any;
 }
 
-const AddItem: FC<Props> = ({addItem}) => {
+const AddItem: FC<Props> =  ({addItem}) => {
+
     const [input, setInput] = useState('');
 
-    // useEffect(() => {
-    //     console.log(input);
-    // }, [input]);
-
-    const handleNewItem = () => {
+    const newItemHandler = () => {
         if (input.length) {
             addItem(input);
             setInput('');
         }
     };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const keyDownHandler = (event: KeyboardEvent) => {
         if (event.key === 'Enter' && input.length) {
-            handleNewItem();
+            newItemHandler();
         }
     };
 
+
     return (
-        <li>
+        <li className='add-item'>
             <input
+                type='text'
                 autoFocus={true}
                 value={input}
-                onChange={e => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
                 placeholder='Write something...'
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={keyDownHandler}
             />
 
-            <button onClick={handleNewItem}>+</button>
+            <button
+                title={'Add new item'}
+                onClick={newItemHandler}>
+                +
+            </button>
         </li>
     )
 };

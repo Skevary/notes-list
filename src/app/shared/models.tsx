@@ -1,46 +1,62 @@
 import {uuid} from "./utility";
 
+/* Types */
+
 export type List = {
     id: string;
-    children: ListItem[]
-    parentId: string | null;
+    items: ListItem[]
 }
 
 export type ListItem = {
     id: string;
     value: string;
-    children: ListItem[]
+    sublistId: string | null;
 }
 
-export const INITIAL_LIST_ITEMS: ListItem[] = [
-    {
-        id: uuid(),
-        children: [],
-        value: 'Coffee'
-    }, {
-        id: uuid(),
-        children: [
-            {
-                id: uuid(),
-                children: [],
-                value: 'Green Tea'
-            },
-            {
-                id: uuid(),
-                children: [],
-                value: 'Black Tea'
-            }
-        ],
-        value: 'Tea'
-    }, {
-        id: uuid(),
-        children: [],
-        value: 'Milk'
-    },
-];
+export type ActiveItem = {
+    listId: string | null;
+    itemId: string | null;
+}
+
+
+/* Constants */
 
 export const INITIAL_LIST: List = {
-    id: uuid(),
-    children: INITIAL_LIST_ITEMS,
-    parentId: null // root
+    id: 'root',
+    items: [
+        {
+            id: uuid(),
+            value: 'Coffee',
+            sublistId: null
+        }, {
+            id: uuid(),
+            value: 'Tea',
+            sublistId: 'inner'
+        }, {
+            id: uuid(),
+            value: 'Milk',
+            sublistId: null
+        }
+    ],
+};
+
+export const EMBEDDED_LIST: List = {
+    id: 'inner',
+    items: [
+        {
+            id: uuid(),
+            value: 'Green Tea',
+            sublistId: null
+        },
+        {
+            id: uuid(),
+            value: 'Black Tea',
+            sublistId: null
+        }
+    ]
+};
+
+export const EMPTY_ACTIVE_ITEM = {
+    itemId: null,
+    listId: null
 };
