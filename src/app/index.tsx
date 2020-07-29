@@ -7,7 +7,6 @@ import './styles.scss';
 
 const App: FC = () => {
     const [list, changeList] = useState<ListItem[]>(INITIAL_LIST_ITEMS);
-
     const [selectedItemId, setSelectedItemId] = useState<null | string>(null);
 
     const addNewItem = (val: string) => {

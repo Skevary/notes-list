@@ -36,7 +36,7 @@ const Controls: FC<Props> = props => {
             </button>
 
             <button
-                disabled={!props.selectedItemId || !!props.items[idx].children.length}
+                disabled={!props.selectedItemId || !!props.items[idx]?.children.length}
                 title='Add sublist'
                 onClick={() => props.addSublist(idx)}
             >
@@ -44,7 +44,7 @@ const Controls: FC<Props> = props => {
             </button>
 
             <button
-                disabled={!props.selectedItemId || !props.items[idx].children.length}
+                disabled={!props.selectedItemId || !props.items[idx]?.children.length}
                 title='Remove sublist'
                 onClick={() => props.removeSublist(idx)}
             >
